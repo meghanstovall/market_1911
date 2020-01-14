@@ -50,7 +50,27 @@ class Market
     if amount > all_inventory[item]
       false
     else
+      update_stock_when_selling(item, amount)
       true
+    end
+  end
+
+  def update_stock_when_selling(item, amount)
+    vendors_with_item = @vendors.find_all do |vender|
+      vender.inventory.keys.include?(item)
+    end
+
+    count = 0
+    until amount == 0
+      first_vendor = vendors_with_item.shift
+      if first_vendor.inventory[item] < amount
+        count += first_vendor.inventory[item]
+        first_vendor.inventory[item] = 0
+        amount = amount - count
+      else
+        first_vendor.inventory[item] -= amount
+        amount = 0
+      end
     end
   end
 end
