@@ -44,4 +44,13 @@ class Market
       acc
     end
   end
+
+  def sell(item, amount)
+    all_inventory = total_inventory
+    if amount > all_inventory[item]
+      false
+    else
+      true
+    end
+  end
 end

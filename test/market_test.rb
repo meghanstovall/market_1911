@@ -79,4 +79,14 @@ class MarketTest < Minitest::Test
 
     assert_equal expected, @market.total_inventory
   end
+
+  def test_can_sell_an_item
+    @market.add_vendor(@vendor1)
+    @market.add_vendor(@vendor2)
+    @market.add_vendor(@vendor3)
+
+    refute @market.sell(@item1, 200)
+    refute @market.sell(@item5, 1)
+    assert @market.sell(@item4, 5)
+  end
 end
