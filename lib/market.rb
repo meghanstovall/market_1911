@@ -20,4 +20,28 @@ class Market
       vendor.inventory.include?(item)
     end
   end
+
+  def sorted_item_list
+    all_inventories = @vendors.map do |vendor|
+      vendor.inventory
+    end
+
+    items = all_inventories.map do |inventory|
+      inventory.keys
+    end.flatten.uniq
+
+    item_names = items.map do |item|
+      item.name
+    end.sort
+  end
+
+  def total_inventory
+    @vendors.reduce(Hash.new(0)) do |acc, vendor|
+      vendor.inventory.each do |item, amount|
+        acc[item] += amount
+        acc
+      end
+      acc
+    end
+  end
 end
