@@ -8,17 +8,13 @@ class Vendor
   end
 
   def check_stock(itm)
-    #refactor
-    found_item = nil
-    @inventory.each do |item, stock|
-      if item = itm
-        found_item = item
-      end
+    found_item = @inventory.find do |item, stock|
+      item == itm
     end
-    @inventory[found_item]
+    @inventory[found_item[0]]
   end
 
-  def stock(item, amount)
+  def stock(item, amount = 0)
     @inventory[item] += amount
   end
 end
